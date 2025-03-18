@@ -1,8 +1,8 @@
 {
   "name": "a2v-node",
   "version": "1.0.0",
-  "description": "A Node.js API backend with plugin functionality",
-  "main": "server.js",
+  "description": "A robust Node.js API backend with enhanced functionality",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "test": "jest"
@@ -10,8 +10,8 @@
   "keywords": [
     "api",
     "backend",
-    "plugin",
-    "node"
+    "node",
+    "nodejs-backend"
   ],
   "author": "Uddhav",
   "license": "MIT",
