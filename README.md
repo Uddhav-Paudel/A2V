@@ -85,13 +85,6 @@ A2V Node is a Node.js API backend with plugin functionality. It integrates with 
   - **Body**: `[ { "image": "base64-image", "audio": "base64-audio" }, ... ]`
   - **Response**: Generated video in Base64 format.
 
-## Testing
-
-Run tests using Jest:
-```bash
-npm test
-```
-
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
