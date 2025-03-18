@@ -14,7 +14,7 @@
     "video-generation",
     "npm-package"
   ],
-  "author": "Your Name",
+  "author": "Uddhav Paudel",
   "license": "MIT",
   "dependencies": {
     "crypto": "^1.0.1",
