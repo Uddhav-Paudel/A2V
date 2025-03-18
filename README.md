@@ -1,127 +1,97 @@
-# Text-to-Video Tool
+# A2V Node
 
-A Node.js library to convert text into engaging videos using Azure AI services. This tool leverages advanced AI capabilities for content safety analysis, text summarization, text-to-image generation, text-to-speech synthesis, and video creation.
+A2V Node is a Node.js API backend with plugin functionality. It integrates with Azure services to provide features like content safety analysis, text summarization, text-to-image generation, text-to-speech synthesis, and video generation.
 
 ## Features
-- **Content Safety Analysis**: Ensure the input text adheres to safety standards.
-- **Text Summarization**: Generate concise summaries of lengthy text.
-- **Text-to-Image Generation**: Create images based on textual descriptions.
-- **Text-to-Speech Synthesis**: Convert text into natural-sounding speech.
-- **Video Generation**: Combine AI-generated assets into a cohesive video.
 
-## Installation
-
-Install the library using npm:
-
-```bash
-npm install text-to-video-tool
-```
+- **Content Safety API**: Analyze text for safety using Azure Content Safety.
+- **Text Summarization**: Summarize text using Azure OpenAI.
+- **Text-to-Image API**: Generate images from text descriptions.
+- **Text-to-Speech API**: Convert text to speech audio.
+- **Video Generation**: Create videos by combining images and audio.
 
 ## Prerequisites
 
-1. **Azure AI Services**: Ensure you have access to Azure Content Safety and Azure OpenAI services.
-2. **Environment Variables**: Set the following environment variables:
+- Node.js (v16 or higher)
+- Azure Cognitive Services API keys and endpoints for:
+  - Content Safety
+  - OpenAI
+  - Text-to-Image
+  - Text-to-Speech
+
+## Setup
+
+1. Clone the repository:
    ```bash
-   export AZURE_CONTENT_SAFETY_ENDPOINT=<your_content_safety_endpoint>
-   export AZURE_CONTENT_SAFETY_API_KEY=<your_content_safety_api_key>
-   export AZURE_OPENAI_ENDPOINT=<your_openai_endpoint>
-   export AZURE_OPENAI_API_KEY=<your_openai_api_key>
+   git clone <repository-url>
+   cd A2VNode
    ```
 
-## Usage
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-Here is an example of how to use the library in your project:
+3. Configure environment variables:
+   - Rename `.env.example` to `.env`.
+   - Update the placeholders in `.env` with your Azure API keys and endpoints.
 
-```javascript
-const {
-    initializeClients,
-    analyzeContentSafety,
-    summarizeContent,
-    generateImageFromText,
-    synthesizeSpeech,
-    createVideo
-} = require('text-to-video-tool');
+   Example `.env` file:
+   ```properties
+   AZURE_CONTENT_SAFETY_ENDPOINT=https://<your-content-safety-endpoint>.cognitiveservices.azure.com
+   AZURE_CONTENT_SAFETY_API_KEY=<your-content-safety-api-key>
 
-const config = {
-    contentSafetyEndpoint: process.env.AZURE_CONTENT_SAFETY_ENDPOINT,
-    contentSafetyApiKey: process.env.AZURE_CONTENT_SAFETY_API_KEY,
-    openAiEndpoint: process.env.AZURE_OPENAI_ENDPOINT,
-    openAiApiKey: process.env.AZURE_OPENAI_API_KEY,
-};
+   AZURE_OPENAI_ENDPOINT=https://<your-openai-endpoint>.openai.azure.com
+   AZURE_OPENAI_API_KEY=<your-openai-api-key>
 
-const { contentSafetyClient, openAiClient } = initializeClients(config);
+   AZURE_TEXT_TO_IMAGE_ENDPOINT=https://<your-text-to-image-endpoint>.cognitiveservices.azure.com
+   AZURE_TEXT_TO_IMAGE_API_KEY=<your-text-to-image-api-key>
 
-async function main() {
-    const content = "Your text here";
+   AZURE_TEXT_TO_SPEECH_ENDPOINT=https://<your-text-to-speech-endpoint>.cognitiveservices.azure.com
+   AZURE_TEXT_TO_SPEECH_API_KEY=<your-text-to-speech-api-key>
 
-    // Analyze content safety
-    const safetyResult = await analyzeContentSafety(content, contentSafetyClient);
+   PORT=3000
+   ```
 
-    // Summarize content
-    const summary = await summarizeContent(content, openAiClient);
+4. Run the server:
+   ```bash
+   npm start
+   ```
 
-    // Generate an image from text
-    const image = await generateImageFromText(summary, openAiClient);
+## API Endpoints
 
-    // Synthesize speech from text
-    const speech = await synthesizeSpeech(summary, openAiClient);
+### Content Safety
+- **POST** `/ai/content-safety`
+  - **Body**: `{ "content": "text to analyze" }`
+  - **Response**: Safety analysis result.
 
-    // Create a video using the generated assets
-    const video = await createVideo({ text: summary, image, speech });
+### Text Summarization
+- **POST** `/ai/summarize`
+  - **Body**: `{ "content": "text to summarize" }`
+  - **Response**: Summarized text.
 
-    console.log({ safetyResult, summary, video });
-}
+### Text-to-Image
+- **POST** `/ai/text-to-image`
+  - **Body**: `{ "description": "image description" }`
+  - **Response**: Generated image.
 
-main();
+### Text-to-Speech
+- **POST** `/ai/text-to-speech`
+  - **Body**: `{ "text": "text to convert to speech" }`
+  - **Response**: Audio file in Base64 format.
+
+### Video Generation
+- **POST** `/video/generate`
+  - **Body**: `[ { "image": "base64-image", "audio": "base64-audio" }, ... ]`
+  - **Response**: Generated video in Base64 format.
+
+## Testing
+
+Run tests using Jest:
+```bash
+npm test
 ```
 
-## API Reference
-
-### `initializeClients(config)`
-Initializes and returns Azure AI clients.
-
-- **Parameters**:
-  - `config`: Object containing Azure service endpoints and API keys.
-- **Returns**: `{ contentSafetyClient, openAiClient }`
-
-### `analyzeContentSafety(content, client)`
-Analyzes the safety of the provided content.
-
-- **Parameters**:
-  - `content`: The text to analyze.
-  - `client`: The Azure Content Safety client.
-- **Returns**: Safety analysis result.
-
-### `summarizeContent(content, client)`
-Summarizes the provided text.
-
-- **Parameters**:
-  - `content`: The text to summarize.
-  - `client`: The Azure OpenAI client.
-- **Returns**: Summarized text.
-
-### `generateImageFromText(text, client)`
-Generates an image based on the provided text.
-
-- **Parameters**:
-  - `text`: The text description for the image.
-  - `client`: The Azure OpenAI client.
-- **Returns**: Image data.
-
-### `synthesizeSpeech(text, client)`
-Converts text into speech.
-
-- **Parameters**:
-  - `text`: The text to convert to speech.
-  - `client`: The Azure OpenAI client.
-- **Returns**: Speech audio data.
-
-### `createVideo(assets)`
-Creates a video using the provided assets.
-
-- **Parameters**:
-  - `assets`: Object containing text, image, and speech data.
-- **Returns**: Video file.
-
 ## License
-MIT
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.

@@ -1,20 +1,19 @@
 {
-  "name": "text-to-video-tool",
+  "name": "a2v-node",
   "version": "1.0.0",
-  "description": "A library to convert text into video using Azure AI services.",
-  "main": "routes/ai.js",
-  "type": "module",
+  "description": "A Node.js API backend with plugin functionality",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "jest"
   },
   "keywords": [
-    "text-to-video",
-    "azure-ai",
-    "video-generation",
-    "npm-package"
+    "api",
+    "backend",
+    "plugin",
+    "node"
   ],
-  "author": "Uddhav Paudel",
+  "author": "Uddhav",
   "license": "MIT",
   "dependencies": {
     "crypto": "^1.0.1",
