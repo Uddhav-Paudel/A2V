@@ -1,4 +1,4 @@
-A2V Node is a Node.js API backend. It integrates with Azure AI services to provide features like content safety analysis, text summarization, text-to-image generation, text-to-speech synthesis, and video generation.
+A2V Node is a Node.js API Project. It integrates with Azure AI services to provide features like content safety analysis, text summarization, text-to-image generation, text-to-speech synthesis, and video generation.
 
 ## Features
 
